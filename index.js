@@ -47,12 +47,6 @@ function updateUI() {
   document.getElementById("wins").textContent = wins;
   document.getElementById("losses").textContent = losses;
 
-  // Use requestAnimationFrame to ensure UI updates before resolving the game logic
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => {
-      resolve();
-    });
-  });
 }
 
 function checkGameStatus() {
@@ -70,7 +64,7 @@ function checkGameStatus() {
   }
 }
 
-document.addEventListener("keydown", async function (event) {
+document.addEventListener("keyup", async function (event) {
   let guessedLetter = event.key.toLowerCase();
 
   if (!guessedLetter.match(/^[a-z]$/) || guessedLetters.includes(guessedLetter) || incorrectLetters.includes(guessedLetter)) {
@@ -83,8 +77,8 @@ document.addEventListener("keydown", async function (event) {
     incorrectLetters.push(guessedLetter);
     remainingGuesses--;
   }
-  await updateUI();
   checkGameStatus();
+  updateUI();
   
 });
 
